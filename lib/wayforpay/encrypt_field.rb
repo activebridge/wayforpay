@@ -1,3 +1,5 @@
+require 'openssl'
+
 module Wayforpay
   class EncryptField
     attr_reader :keys, :attrs
