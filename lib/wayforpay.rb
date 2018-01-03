@@ -1,22 +1,15 @@
+require_relative 'wayforpay/constants'
+require_relative 'wayforpay/encrypt_field'
+require_relative 'wayforpay/payments'
+require_relative 'wayforpay/request'
+require_relative 'wayforpay/util/configuration'
+
 module Wayforpay
   extend SingleForwardable
 
-  def_delegators :configuration,
-    :merchant_account, :merchant_domain_name, :encrypt_secret_key
+  def_delegators :configuration, :merchant_account,
+                 :merchant_domain_name, :encrypt_secret_key
 
-  def self.hold(attrs = {})
-    Hold.(Constants::HOLD_ATTRS.merge(attrs))
-  end
-
-  def self.refund(attrs = {})
-    Refund.(Constants::REFUND_ATTRS.merge(attrs))
-  end
-
-  def self.settle(attrs = {})
-    Settle.(Constants::SETTLE_ATTRS.merge(attrs))
-  end
-
-  ##
   # Pre-configure with merchant_account, merchant_domain_name
   # and encrypt_secret_key.
   def self.configure(&block)
@@ -31,10 +24,3 @@ module Wayforpay
     @configuration ||= Util::Configuration.new
   end
 end
-
-require_relative 'wayforpay/util/configuration'
-require_relative 'wayforpay/hold'
-require_relative 'wayforpay/refund'
-require_relative 'wayforpay/settle'
-require_relative 'wayforpay/encrypt_field'
-require_relative 'wayforpay/constants'

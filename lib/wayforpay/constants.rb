@@ -8,8 +8,6 @@ module Wayforpay
 
     HOLD_ATTRS = {
       transactionType: 'CHARGE',
-      merchantAccount: Wayforpay.merchant_account,
-      merchantDomainName: Wayforpay.merchant_domain_name,
       authorizationType: 'SimpleSignature',
       merchantTransactionType: 'AUTH',
       merchantTransactionSecureType: 'NON3DS',
@@ -18,14 +16,27 @@ module Wayforpay
 
     REFUND_ATTRS = {
       transactionType: 'REFUND',
-      merchantAccount: Wayforpay.merchant_account,
       apiVersion: 1
     }.freeze
 
     SETTLE_ATTRS = {
       transactionType: 'SETTLE',
-      merchantAccount: Wayforpay.merchant_account,
       apiVersion: 1
     }.freeze
+  end
+
+  def self.hold_params
+    HOLD_ATTRS.merge(
+      merchantAccount: Wayforpay.merchant_account,
+      merchantDomainName: Wayforpay.merchant_domain_name,
+    )
+  end
+
+  def self.refund_params
+    REFUND_ATTRS.merge(merchantAccount: Wayforpay.merchant_account)
+  end
+
+  def self.settle_params
+    SETTLE_ATTRS.merge(merchantAccount: Wayforpay.merchant_account)
   end
 end
