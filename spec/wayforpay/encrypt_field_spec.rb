@@ -40,7 +40,7 @@ describe Wayforpay::EncryptField do
     context 'in case params are HOLD_ENCRYPT_FIELDS and HOLD_ATTRS' do
       let(:keys) { Wayforpay::Constants::HOLD_ENCRYPT_FIELDS }
       let(:attrs) do
-        Wayforpay::Constants::HOLD_ATTRS.merge({
+        Wayforpay::Constants.hold_params.merge({
           orderReference: 'new_order',
           amount: 1,
           currency: 'UAH',
@@ -58,7 +58,7 @@ describe Wayforpay::EncryptField do
     context 'in case params are REFUND_ENCRYPT_FIELDS and REFUND_ATTRS' do
       let(:keys) { Wayforpay::Constants::REFUND_ENCRYPT_FIELDS }
       let(:attrs) do
-        Wayforpay::Constants::REFUND_ATTRS.merge({
+        Wayforpay::Constants.refund_params.merge({
           orderReference: 'new_order',
           amount: 2,
           currency: 'UAH',
@@ -72,7 +72,7 @@ describe Wayforpay::EncryptField do
     context 'in case params are SETTLE_ENCRYPT_FIELDS and SETTLE_ATTRS' do
       let(:keys) { Wayforpay::Constants::SETTLE_ENCRYPT_FIELDS }
       let(:attrs) do
-        Wayforpay::Constants::SETTLE_ATTRS.merge({
+        Wayforpay::Constants.settle_params.merge({
           orderReference: 'new_order',
           amount: 3,
           currency: 'UAH'
@@ -89,7 +89,7 @@ describe Wayforpay::EncryptField do
     context 'in case params are HOLD_ENCRYPT_FIELDS and HOLD_ATTRS' do
       let(:keys) { Wayforpay::Constants::HOLD_ENCRYPT_FIELDS }
       let(:attrs) do
-        Wayforpay::Constants::HOLD_ATTRS.merge({
+        Wayforpay::Constants.hold_params.merge({
           orderReference: 'new_order',
           amount: 1,
           currency: 'UAH',
@@ -113,7 +113,7 @@ describe Wayforpay::EncryptField do
     context 'in case params are REFUND_ENCRYPT_FIELDS and REFUND_ATTRS' do
       let(:keys) { Wayforpay::Constants::REFUND_ENCRYPT_FIELDS }
       let(:attrs) do
-        Wayforpay::Constants::REFUND_ATTRS.merge({
+        Wayforpay::Constants.refund_params.merge({
           orderReference: 'new_order',
           amount: 2,
           currency: 'UAH',
@@ -133,7 +133,7 @@ describe Wayforpay::EncryptField do
     context 'in case params are SETTLE_ENCRYPT_FIELDS and SETTLE_ATTRS' do
       let(:keys) { Wayforpay::Constants::SETTLE_ENCRYPT_FIELDS }
       let(:attrs) do
-        Wayforpay::Constants::SETTLE_ATTRS.merge({
+        Wayforpay::Constants.settle_params.merge({
           orderReference: 'new_order',
           amount: 3,
           currency: 'UAH'
