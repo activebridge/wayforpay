@@ -23,8 +23,6 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.0.0'
 
-  s.add_dependency 'builder', '>= 1.14'
-
   {
     'rake'    => '~> 10.0',
     'rspec'   => '~> 3.0',
