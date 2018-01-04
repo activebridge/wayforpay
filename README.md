@@ -1,3 +1,5 @@
+[![Gem Version](http://img.shields.io/gem/v/wayforpay.svg)](https://rubygems.org/gems/wayforpay)
+
 ## Installation
 
   Add this line to your application's `Gemfile`:
