@@ -10,7 +10,7 @@
   ```ruby
   $ bundle install
   ```
-  Or install it yourself as:
+  To manually install `wayforpay` via Rubygems just run:
   ```ruby
   $ gem install wayforpay
   ```
