@@ -1,3 +1,5 @@
+require 'forwardable'
+
 require_relative 'wayforpay/constants'
 require_relative 'wayforpay/encrypt_field'
 require_relative 'wayforpay/payments'

@@ -23,9 +23,8 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.0.0'
 
-  {
-    'rake'    => '~> 10.0',
-    'rspec'   => '~> 3.0',
-    'webmock' => '~> 1.6.2'
-  }.each { |l, v| s. add_development_dependency l, v }
+  s.add_development_dependency 'bundler', '~> 1.14'
+  s.add_development_dependency 'rake', '~> 10.0'
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'webmock', '~> 1.6', '>= 1.6.2'
 end

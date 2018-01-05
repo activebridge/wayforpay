@@ -1,6 +1,10 @@
 describe Wayforpay do
   subject { described_class }
 
+  it 'has a version number' do
+    expect(Wayforpay::VERSION).not_to be nil
+  end
+
   describe '.configure' do
     let(:merchant_account) { 'merchantAccount' }
     let(:merchant_domain_name) { 'merchantDomainName' }

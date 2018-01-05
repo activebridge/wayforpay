@@ -1,3 +1,5 @@
+require 'uri'
+
 module Wayforpay
   module Constants
     URL = URI.parse('https://api.wayforpay.com/api').freeze
