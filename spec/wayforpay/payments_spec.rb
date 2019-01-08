@@ -50,7 +50,7 @@ describe Wayforpay::Payments do
       {
         orderReference: 'new_order',
         amount: 123,
-        currency: 'UAH',
+        currency: 'UAH'
       }
     end
     let(:request_params) do
@@ -62,6 +62,30 @@ describe Wayforpay::Payments do
       expect(Wayforpay::Request).to receive(:call)
         .with(encrypt_fields, request_params).once
       described_class.settle(attrs)
+    end
+  end
+
+  context '.verify' do
+    let(:attrs) do
+      {
+        orderReference: 'new_order',
+        amount: 123,
+        currency: 'UAH',
+        card: '4111111111111111',
+        expMonth: '11',
+        expYear: '2020',
+        cardCvv: '111',
+        cardHolder: 'TARAS BULBA'
+      }
+    end
+    let(:request_params) do
+      Wayforpay::Constants.verify_params.merge(attrs)
+    end
+    let(:encrypt_fields) { Wayforpay::Constants::VERIFY_ENCRYPT_FIELDS }
+    it "receives 'call' method for Wayforpay::Request" do
+      expect(Wayforpay::Request).to receive(:call)
+        .with(encrypt_fields, request_params).once
+      described_class.verify(attrs)
     end
   end
 end

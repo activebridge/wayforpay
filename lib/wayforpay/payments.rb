@@ -19,5 +19,11 @@ module Wayforpay
       request_params = Constants.settle_params.merge(attrs)
       Wayforpay::Request.(Constants::SETTLE_ENCRYPT_FIELDS, request_params)
     end
+
+    # required attrs: orderReference, amount, currency, card, expMonth, expYear, cardCvv, cardHolder
+    def self.verify(attrs = {})
+      request_params = Constants.verify_params.merge(attrs)
+      Wayforpay::Request.(Constants::VERIFY_ENCRYPT_FIELDS, request_params)
+    end
   end
 end

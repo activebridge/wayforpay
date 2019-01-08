@@ -74,5 +74,28 @@ describe Wayforpay::Request do
         subject
       end
     end
+
+    context 'verify params' do
+      let(:attrs) do
+        {
+          orderReference: 'new_order',
+          amount: 123,
+          currency: 'UAH',
+          card: '4111111111111111',
+          expMonth: '11',
+          expYear: '2020',
+          cardCvv: '111',
+          cardHolder: 'TARAS BULBA'
+        }
+      end
+      let(:encrypt_fields) { Wayforpay::Constants::VERIFY_ENCRYPT_FIELDS }
+      let(:request_attrs) { Wayforpay::Constants.verify_params.merge(attrs) }
+
+      it "receives 'post' method for Net::HTTP" do
+        expect(Net::HTTP).to receive(:post)
+          .with(url, encrypted_attrs.to_json).once
+        subject
+      end
+    end
   end
 end
