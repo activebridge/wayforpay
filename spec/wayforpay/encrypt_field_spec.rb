@@ -81,6 +81,19 @@ describe Wayforpay::EncryptField do
 
       it { is_expected.to eq 'ba9a61da321d53b6a94dadeabf24eccf' }
     end
+
+    context 'in case params are VERIFY_ENCRYPT_FIELDS and VERIFY_ATTRS' do
+      let(:keys) { Wayforpay::Constants::VERIFY_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.verify_params.merge({
+          orderReference: 'verify_order',
+          amount: 3,
+          currency: 'UAH'
+        })
+      end
+
+      it { is_expected.to eq 'e30d11bd5eec5f8f5fd980743d71d232' }
+    end
   end
 
   describe '#signature_string' do
@@ -146,6 +159,32 @@ describe Wayforpay::EncryptField do
         before { attrs.delete(:orderReference) }
 
         it { is_expected.to eq 'merchantAccount;3;UAH' }
+      end
+    end
+
+    context 'in case params are VERIFY_ENCRYPT_FIELDS and VERIFY_ATTRS' do
+      let(:keys) { Wayforpay::Constants::VERIFY_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.verify_params.merge({
+          orderReference: 'verify_order',
+          amount: 3,
+          currency: 'UAH',
+          card: '4111111111111111',
+          expMonth: '11',
+          expYear: '2020',
+          cardCvv: '111',
+          cardHolder: 'TARAS BULBA'
+        })
+      end
+
+      it do
+        is_expected.to eq 'merchantAccount;merchantDomainName;verify_order;3;UAH'
+      end
+
+      context 'in case any required fields are missing' do
+        before { attrs.delete(:orderReference) }
+
+        it { is_expected.to eq 'merchantAccount;merchantDomainName;3;UAH' }
       end
     end
   end

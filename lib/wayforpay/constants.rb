@@ -7,6 +7,7 @@ module Wayforpay
     HOLD_ENCRYPT_FIELDS = %i[merchantAccount merchantDomainName orderReference orderDate amount currency productName productCount productPrice].freeze
     REFUND_ENCRYPT_FIELDS = %i[merchantAccount orderReference amount currency].freeze
     SETTLE_ENCRYPT_FIELDS = %i[merchantAccount orderReference amount currency].freeze
+    VERIFY_ENCRYPT_FIELDS = %i[merchantAccount merchantDomainName orderReference amount currency].freeze
 
     HOLD_ATTRS = {
       transactionType: 'CHARGE',
@@ -26,10 +27,15 @@ module Wayforpay
       apiVersion: 1
     }.freeze
 
+    VERIFY_ATTRS = {
+      transactionType: 'VERIFY',
+      apiVersion: 1
+    }.freeze
+
     def self.hold_params
       HOLD_ATTRS.merge(
         merchantAccount: Wayforpay.merchant_account,
-        merchantDomainName: Wayforpay.merchant_domain_name,
+        merchantDomainName: Wayforpay.merchant_domain_name
       )
     end
 
@@ -39,6 +45,13 @@ module Wayforpay
 
     def self.settle_params
       SETTLE_ATTRS.merge(merchantAccount: Wayforpay.merchant_account)
+    end
+
+    def self.verify_params
+      VERIFY_ATTRS.merge(
+        merchantAccount: Wayforpay.merchant_account,
+        merchantDomainName: Wayforpay.merchant_domain_name
+      )
     end
   end
 end
