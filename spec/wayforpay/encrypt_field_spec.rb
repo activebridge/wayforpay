@@ -94,6 +94,23 @@ describe Wayforpay::EncryptField do
 
       it { is_expected.to eq 'e30d11bd5eec5f8f5fd980743d71d232' }
     end
+
+    context 'in case params are CREATE_INVOICE_ENCRYPT_FIELDS and CREATE_INVOICE_ATTRS' do
+      let(:keys) { Wayforpay::Constants::CREATE_INVOICE_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.create_invoice_params.merge({
+          orderReference: 'new_order',
+          amount: 1,
+          currency: 'UAH',
+          orderDate: 1514214411,
+          productName: ['TRIP'],
+          productPrice: [123],
+          productCount: [1]
+        })
+      end
+
+      it { is_expected.to eq '69306842abfb5424508a96674aa7bbaf' }
+    end
   end
 
   describe '#signature_string' do
@@ -185,6 +202,29 @@ describe Wayforpay::EncryptField do
         before { attrs.delete(:orderReference) }
 
         it { is_expected.to eq 'merchantAccount;merchantDomainName;3;UAH' }
+      end
+    end
+
+    context 'in case params are CREATE_INVOICE_ENCRYPT_FIELDS and CREATE_INVOICE_ATTRS' do
+      let(:keys) { Wayforpay::Constants::CREATE_INVOICE_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.create_invoice_params.merge({
+          orderReference: 'new_order',
+          amount: 1,
+          currency: 'UAH',
+          orderDate: 1514214411,
+          productName: ['TRIP'],
+          productPrice: [123, 987],
+          productCount: [2]
+        })
+      end
+
+      it { is_expected.to eq 'merchantAccount;merchantDomainName;new_order;1514214411;1;UAH;TRIP;2;123;987' }
+
+      context 'in case any required fields are missing' do
+        before { attrs.delete(:orderDate) }
+
+        it { is_expected.to eq 'merchantAccount;merchantDomainName;new_order;1;UAH;TRIP;2;123;987' }
       end
     end
   end
