@@ -25,5 +25,12 @@ module Wayforpay
       request_params = Constants.verify_params.merge(attrs)
       Wayforpay::Request.(Constants::VERIFY_ENCRYPT_FIELDS, request_params)
     end
+
+    # required attrs: orderReference, amount, currency, orderDate,
+    # productName[], productPrice[], productCount[]
+    def self.create_invoice(attrs = {})
+      request_params = Constants.create_invoice_params.merge(attrs)
+      Wayforpay::Request.(Constants::CREATE_INVOICE_ENCRYPT_FIELDS, request_params)
+    end
   end
 end

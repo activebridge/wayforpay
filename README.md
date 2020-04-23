@@ -129,6 +129,48 @@
     "currency": "UAH"
   }
   ```
+
+  ### Creating invoices to the clients for payment for goods/services. ([Invoice](https://wiki.wayforpay.com/display/WADE/Invoice))
+
+  ```ruby
+  Wayforpay::Payments.create_invoice(parameters)
+  ```
+
+  Required parameters:
+   
+  | Parameter         | Description                                            |
+  | ----------------- | ------------------------------------------------------ |
+  | orderReference    | Unique number of the order in merchant’s system        |
+  | orderDate         | Date of order placing                                  |
+  | amount            | Amount of refund                                       |
+  | currency          | Currency of order: UAH (USD, EUR)                      |
+  | productName[]     | Array with the names of ordered products               |
+  | productPrice[]    | Array with the prices per product unit                 |
+  | productCount[]    | Array with the quantity of ordered goods by each item  |
+   
+  An example of request:
+  
+  ```ruby
+  {
+    "orderReference": "myOrder1",
+    "orderDate": 1421412898,
+    "amount": 0.13,
+    "currency": "UAH",
+    "productName": ["Samsung WB1100F","Samsung Galaxy Tab 4 7.0 8GB 3G Black"],
+    "productPrice": [21.1,30.99],
+    "productCount": [1,2]
+  }
+  ```
+
+  An example of response:
+  
+  ```ruby
+  {
+    "reason": "1100",
+    "reasonCode": "Ok",
+    "invoiceUrl": "https://secure.wayforpay.com/invoice/i99edb6518fb5"
+  }
+  ```
 ## Contributing
 
   1. Fork it

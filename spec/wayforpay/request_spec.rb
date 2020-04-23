@@ -97,5 +97,27 @@ describe Wayforpay::Request do
         subject
       end
     end
+
+    context "create_invoice params" do
+      let(:attrs) do
+        {
+          orderReference: 'new_order',
+          amount: 123,
+          currency: 'UAH',
+          orderDate: 1514214411,
+          productName: ['TRIP'],
+          productPrice: [123],
+          productCount: [1]
+        }
+      end
+      let(:encrypt_fields) { Wayforpay::Constants::CREATE_INVOICE_ENCRYPT_FIELDS }
+      let(:request_attrs) { Wayforpay::Constants.create_invoice_params.merge(attrs) }
+
+      it "receives 'post' method for Net::HTTP" do
+        expect(Net::HTTP).to receive(:post)
+          .with(url, encrypted_attrs.to_json).once
+        subject
+      end
+    end
   end
 end
