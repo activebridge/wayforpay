@@ -111,6 +111,18 @@ describe Wayforpay::EncryptField do
 
       it { is_expected.to eq '69306842abfb5424508a96674aa7bbaf' }
     end
+
+    context 'in case params are ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS and ACCEPT_INVOICE_PAYMENT_ATTRS' do
+      let(:keys) { Wayforpay::Constants::ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.accept_invoice_payment_params.merge({
+          orderReference: 'new_order',
+          time: 1415379863
+        })
+      end
+
+      it { is_expected.to eq 'e898c9784eddd1d0966fd28a62820149' }
+    end
   end
 
   describe '#signature_string' do
@@ -225,6 +237,24 @@ describe Wayforpay::EncryptField do
         before { attrs.delete(:orderDate) }
 
         it { is_expected.to eq 'merchantAccount;merchantDomainName;new_order;1;UAH;TRIP;2;123;987' }
+      end
+    end
+
+    context 'in case params are ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS and ACCEPT_INVOICE_PAYMENT_ATTRS' do
+      let(:keys) { Wayforpay::Constants::ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.accept_invoice_payment_params.merge({
+          orderReference: 'new_order',
+          time: 1415379863
+        })
+      end
+
+      it { is_expected.to eq 'new_order;accept;1415379863' }
+
+      context 'in case any required fields are missing' do
+        before { attrs.delete(:orderReference) }
+
+        it { is_expected.to eq 'accept;1415379863' }
       end
     end
   end

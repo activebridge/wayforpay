@@ -171,6 +171,29 @@
     "invoiceUrl": "https://secure.wayforpay.com/invoice/i99edb6518fb5"
   }
   ```
+
+  ### Acceptance of invoice payments. ([Invoice](https://wiki.wayforpay.com/display/WADE/Invoice), scroll down)
+
+  ```ruby
+  Wayforpay::Payments.accept_invoice_payment(parameters)
+  ```
+
+  Required parameters:
+
+  | Parameter         | Description                                            |
+  | ----------------- | ------------------------------------------------------ |
+  | orderReference    | Unique number of the order in merchant’s system        |
+  | time              | Time of acceptance                                     |
+
+  An example of request:
+
+  ```ruby
+  {
+    "orderReference": "myOrder1",
+    "time": 1421412898
+  }
+  ```
+
 ## Contributing
 
   1. Fork it
