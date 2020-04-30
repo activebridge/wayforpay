@@ -119,5 +119,22 @@ describe Wayforpay::Request do
         subject
       end
     end
+
+    context "accept_invoice_payment params" do
+      let(:attrs) do
+        {
+          orderReference: 'new_order',
+          time: 1415379863
+        }
+      end
+      let(:encrypt_fields) { Wayforpay::Constants::ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS }
+      let(:request_attrs) { Wayforpay::Constants.accept_invoice_payment_params.merge(attrs) }
+
+      it "receives 'post' method for Net::HTTP" do
+        expect(Net::HTTP).to receive(:post)
+          .with(url, encrypted_attrs.to_json).once
+        subject
+      end
+    end
   end
 end

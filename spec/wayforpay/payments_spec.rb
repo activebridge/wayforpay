@@ -113,4 +113,23 @@ describe Wayforpay::Payments do
       described_class.create_invoice(attrs)
     end
   end
+
+  context '.accept_invoice_payment' do
+    let(:attrs) do
+      {
+        orderReference: 'new_order',
+        time: 1415379863
+      }
+    end
+    let(:request_params) do
+      Wayforpay::Constants.accept_invoice_payment_params.merge(attrs)
+    end
+    let(:encrypt_fields) { Wayforpay::Constants::ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS }
+
+    it "receives 'call' method for Wayforpay::Request" do
+      expect(Wayforpay::Request).to receive(:call)
+        .with(encrypt_fields, request_params).once
+      described_class.accept_invoice_payment(attrs)
+    end
+  end
 end
