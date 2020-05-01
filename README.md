@@ -194,6 +194,35 @@
   }
   ```
 
+  ### Receiving client data. ([Get Client](https://wiki.wayforpay.com/pages/viewpage.action?pageId=2424999))
+
+  ```ruby
+  Wayforpay::Payments.get_client(parameters)
+  ```
+
+  Required parameters: one of card or recToken !
+
+  | Parameter         | Description                                            |
+  | ----------------- | ------------------------------------------------------ |
+  | *card*              | Card number 16 characters                              |
+  | *recToken*          | Card token                                             |
+
+  ***Note: field card or recToken should be required.***
+
+  An example of request:
+
+  ```ruby
+  {
+    "card": "4111111111111111"
+  }
+  ```
+
+  ```ruby
+  {
+    "recToken": "55111111-1111-0000-9988-68c457123456"
+  }
+  ```
+
 ## Contributing
 
   1. Fork it

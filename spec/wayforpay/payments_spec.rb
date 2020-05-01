@@ -132,4 +132,22 @@ describe Wayforpay::Payments do
       described_class.accept_invoice_payment(attrs)
     end
   end
+
+  context '.get_client' do
+    let(:attrs) do
+      {
+        card: '4111111111111111'
+      }
+    end
+    let(:request_params) do
+      Wayforpay::Constants.get_client_params.merge(attrs)
+    end
+    let(:encrypt_fields) { Wayforpay::Constants::GET_CLIENT_ENCRYPT_FIELDS }
+
+    it "receives 'call' method for Wayforpay::Request" do
+      expect(Wayforpay::Request).to receive(:call)
+        .with(encrypt_fields, request_params).once
+      described_class.get_client(attrs)
+    end
+  end
 end
