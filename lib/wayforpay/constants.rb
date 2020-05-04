@@ -10,6 +10,7 @@ module Wayforpay
     VERIFY_ENCRYPT_FIELDS = %i[merchantAccount merchantDomainName orderReference amount currency].freeze
     CREATE_INVOICE_ENCRYPT_FIELDS = %i[merchantAccount merchantDomainName orderReference orderDate amount currency productName productCount productPrice].freeze
     ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS = %i[orderReference status time].freeze
+    GET_CLIENT_ENCRYPT_FIELDS = %i[merchantAccount recToken card].freeze
 
     HOLD_ATTRS = {
       transactionType: 'CHARGE',
@@ -46,6 +47,11 @@ module Wayforpay
       status:'accept'
     }.freeze
 
+    GET_CLIENT_ATTRS = {
+      transactionType: 'GET_CLIENT',
+      apiVersion: 1
+    }
+
     def self.hold_params
       HOLD_ATTRS.merge(
         merchantAccount: Wayforpay.merchant_account,
@@ -77,6 +83,10 @@ module Wayforpay
 
     def self.accept_invoice_payment_params
       ACCEPT_INVOICE_PAYMENT_ATTRS
+    end
+
+    def self.get_client_params
+      GET_CLIENT_ATTRS.merge(merchantAccount: Wayforpay.merchant_account)
     end
   end
 end

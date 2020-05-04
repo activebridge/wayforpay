@@ -136,5 +136,17 @@ describe Wayforpay::Request do
         subject
       end
     end
+
+    context "get_client params" do
+      let(:attrs) { { card: '4111111111111111' } }
+      let(:encrypt_fields) { Wayforpay::Constants::GET_CLIENT_ENCRYPT_FIELDS }
+      let(:request_attrs) { Wayforpay::Constants.get_client_params.merge(attrs) }
+
+      it "receives 'post' method for Net::HTTP" do
+        expect(Net::HTTP).to receive(:post)
+          .with(url, encrypted_attrs.to_json).once
+        subject
+      end
+    end
   end
 end

@@ -38,5 +38,11 @@ module Wayforpay
       request_params = Constants.accept_invoice_payment_params.merge(attrs)
       Wayforpay::Request.(Constants::ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS, request_params)
     end
+
+    # required attrs: recToken or card
+    def self.get_client(attrs = {})
+      request_params = Constants.get_client_params.merge(attrs)
+      Wayforpay::Request.(Constants::GET_CLIENT_ENCRYPT_FIELDS, request_params)
+    end
   end
 end

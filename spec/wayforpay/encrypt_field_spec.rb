@@ -123,6 +123,28 @@ describe Wayforpay::EncryptField do
 
       it { is_expected.to eq 'e898c9784eddd1d0966fd28a62820149' }
     end
+
+    context 'in case params are GET_CLIENT_ENCRYPT_FIELDS and GET_CLIENT_PAYMENT_ATTRS with Card' do
+      let(:keys) { Wayforpay::Constants::GET_CLIENT_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.get_client_params.merge({
+          card: '4111111111111111'
+        })
+      end
+
+      it { is_expected.to eq '2f8ee7960ab54bbb2b91bb0f9c6859ce' }
+    end
+
+    context 'in case params are GET_CLIENT_ENCRYPT_FIELDS and GET_CLIENT_PAYMENT_ATTRS with recToken' do
+      let(:keys) { Wayforpay::Constants::GET_CLIENT_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.get_client_params.merge({
+          recToken: 'recToken'
+        })
+      end
+
+      it { is_expected.to eq '32ef101245167e46171664c1e6c9a938' }
+    end
   end
 
   describe '#signature_string' do
@@ -255,6 +277,33 @@ describe Wayforpay::EncryptField do
         before { attrs.delete(:orderReference) }
 
         it { is_expected.to eq 'accept;1415379863' }
+      end
+    end
+
+    context 'in case params are GET_CLIENT_ENCRYPT_FIELDS and GET_CLIENT_ATTRS' do
+      let(:keys) { Wayforpay::Constants::GET_CLIENT_ENCRYPT_FIELDS }
+      let(:attrs) do
+        Wayforpay::Constants.get_client_params.merge({
+          card: '4111111111111111'
+        })
+      end
+
+      it { is_expected.to eq 'merchantAccount;4111111111111111' }
+
+      context 'in case recToken was sent' do
+        let(:attrs) do
+          Wayforpay::Constants.get_client_params.merge({
+            recToken: 'recToken'
+          })
+        end
+
+        it { is_expected.to eq 'merchantAccount;recToken' }
+      end
+
+      context 'in case any required fields are missing' do
+        before { attrs.delete(:card) }
+
+        it { is_expected.to eq 'merchantAccount' }
       end
     end
   end
