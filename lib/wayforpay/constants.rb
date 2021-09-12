@@ -11,6 +11,9 @@ module Wayforpay
     CREATE_INVOICE_ENCRYPT_FIELDS = %i[merchantAccount merchantDomainName orderReference orderDate amount currency productName productCount productPrice].freeze
     ACCEPT_INVOICE_PAYMENT_ENCRYPT_FIELDS = %i[orderReference status time].freeze
     GET_CLIENT_ENCRYPT_FIELDS = %i[merchantAccount recToken card].freeze
+    PURCHASE_FORM_ENCRYPT_FIELDS = %i[merchantAccount merchantDomainName orderReference orderDate amount currency productName productCount productPrice].freeze
+    PURCHASE_RESPONSE_ENCRYPT_FIELDS = %i[merchantAccount orderReference amount currency authCode cardPan transactionStatus reasonCode].freeze
+
 
     HOLD_ATTRS = {
       transactionType: 'CHARGE',
@@ -50,7 +53,11 @@ module Wayforpay
     GET_CLIENT_ATTRS = {
       transactionType: 'GET_CLIENT',
       apiVersion: 1
-    }
+    }.freeze
+
+    PURCHASE_FORM_ATTRS = {
+      merchantAuthType: 'SimpleSignature'
+    }.freeze
 
     def self.hold_params
       HOLD_ATTRS.merge(
@@ -87,6 +94,13 @@ module Wayforpay
 
     def self.get_client_params
       GET_CLIENT_ATTRS.merge(merchantAccount: Wayforpay.merchant_account)
+    end
+
+    def self.purchase_form_params
+      PURCHASE_FORM_ATTRS.merge(
+        merchantAccount: Wayforpay.merchant_account,
+        merchantDomainName: Wayforpay.merchant_domain_name
+      )
     end
   end
 end
