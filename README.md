@@ -263,7 +263,7 @@
   ```ruby
     @order = Order.find(params[:orderReference].split('/').first) # take order by it's id
 
-    if WayforpayForm.valid_purchase_response?(params.to_unsafe_h) && params[:reasonCode] == 1100
+    if Wayforpay::Payments.valid_purchase_response?(params.to_unsafe_h) && params[:reasonCode] == 1100
       @order.payed!
     end
   ```
