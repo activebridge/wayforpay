@@ -257,7 +257,7 @@
       productPrice: @order.items.map(&:price),
       serviceUrl: 'https://mysupersite.com/checkout/confirm',
       buttonHtml: "<button type='submit' class='btn btn-primary'>Let's buy the ticket!</button>" # customized button
-    ) %>
+    ).html_safe %>
   ```
   then at the `checkout/confirm` path you can check the response from the server:
   ```ruby
