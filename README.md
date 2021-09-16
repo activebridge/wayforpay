@@ -247,7 +247,7 @@
   
   ```erbruby
     # checkout.html.erb
-    <%= Wayforpay::Payments.purchase_form(
+    <%= Wayforpay::Helpers.purchase_form(
       orderDate: @order.created_at.to_i,
       orderReference: "#{@order.id}/#{SecureRandom.uuid}", # add something uniq not to have (1112) Duplicate Order ID 
       amount: @order.amount,
@@ -263,7 +263,7 @@
   ```ruby
     @order = Order.find(params[:orderReference].split('/').first) # take order by it's id
 
-    if Wayforpay::Payments.valid_purchase_response?(params.to_unsafe_h) && params[:reasonCode] == 1100
+    if Wayforpay::Helpers.valid_purchase_response?(params.to_unsafe_h) && params[:reasonCode] == 1100
       @order.payed!
     end
   ```
