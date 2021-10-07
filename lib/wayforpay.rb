@@ -3,6 +3,7 @@ require 'forwardable'
 require_relative 'wayforpay/constants'
 require_relative 'wayforpay/encrypt_field'
 require_relative 'wayforpay/payments'
+require_relative 'wayforpay/helpers'
 require_relative 'wayforpay/request'
 require_relative 'wayforpay/util/configuration'
 

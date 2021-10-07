@@ -223,6 +223,51 @@
   }
   ```
 
+  ### Generate Purchase form. ([Accept payment (Purchase)](https://wiki.wayforpay.com/en/view/852102))
+  
+  To generate a purchase button HTML you need to:
+  
+  ```ruby
+  Wayforpay::Payments.purchase_form(parameters)
+  ```
+
+  Required parameters:
+  
+| Parameter         | Description                                            |
+  |-------------------|--------------------------------------------------------|
+  | *orderReference*  | Uniq order id                                          |
+  | *orderDate*       | Order date in Uniq Timestamp format                    |
+  | *amount*          | Total order amount                                     |
+  | *currency*        | Order currency in ISO format (USD, UAH, CAD)           |
+  | *productName*     | An array of purchased products                         |
+  | *productCount*    | The number of each product in the purchase             |
+  | *productPrice*    | The each product price                                 |
+
+  An example of the call:
+  
+  ```erbruby
+    # checkout.html.erb
+    <%= Wayforpay::Helpers.purchase_form(
+      orderDate: @order.created_at.to_i,
+      orderReference: "#{@order.id}/#{SecureRandom.uuid}", # add something uniq not to have (1112) Duplicate Order ID 
+      amount: @order.amount,
+      currency: @order.currency,
+      productName: @order.items.map(&:product_name),
+      productCount: @order.items.map(&:count),
+      productPrice: @order.items.map(&:price),
+      serviceUrl: 'https://mysupersite.com/checkout/confirm',
+      buttonHtml: "<button type='submit' class='btn btn-primary'>Let's buy the ticket!</button>" # customized button
+    ).html_safe %>
+  ```
+  then at the `checkout/confirm` path you can check the response from the server:
+  ```ruby
+    @order = Order.find(params[:orderReference].split('/').first) # take order by it's id
+
+    if Wayforpay::Helpers.valid_purchase_response?(params.to_unsafe_h) && params[:reasonCode] == 1100
+      @order.payed!
+    end
+  ```
+
 ## Contributing
 
   1. Fork it
